@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Liste des Produits</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h3>Liste des produits</h3>
+		<div class="container">
+			<form th:action="@{index}" method="get">
+				<label>Mot Clé (désignation):</label>
+				<input type="text" name="motCle" th:value="${motCle}" /><br>
+				<label>Mot Clé (categorie):</label>
+				<input type="text" name="motCat" th:value="${motCat}"  /><br>
+					<label>Date Debut:</label>
+					<input type="date" name="dateDebut" th:value="${dateDebut}"/>
+					<label>Date Fin:</label>
+					<input type="date" name="dateFin" th:value="${dateFin}" /><br>
+					<label>Date Achat avant</label>
+					<input type="date" name="dateAvant" th:value="${dateAvant}"/>
+					<label>Date Achat apres</label>
+					<input type="date" name="dateApres" th:value="${dateApres}"/>
+				<input type="radio" th:name="typeProduit" th:value="Tous" th:checked="${typeProduit=='Tous'}">
+				<label>Tous les produits(Actifs et non actifs)</label>
+				<input type="radio" th:name="typeProduit" th:value="Actifs" th:checked="${typeProduit=='Actifs'}">
+				<label>Uniquement les produits actifs</label>
+				<input type="radio" th:name="typeProduit" th:value="NonActifs" th:checked="${typeProduit=='NonActifs'}">
+				<label>Uniquement les produits non actifs</label>
+				<button class="btn btn-primary"> Chercher </button>
+			</form>
+		</div>
+		<div class="container spacer">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Désignation</th>
+						<th>Prix</th>
+						<th>Quantité</th>
+						<th>Date Achat</th>
+						<th>Categorie</th>
+						<th>Actif</th>
+						<th>Action</th>
+				</thead>
+				<tbody>
+					<tr th:each="p:${pageProduits.content}">
+						<td th:text="${p.id}"></td>
+						<td th:text="${p.designation}"></td>
+						<td th:text="${p.prix}"></td>
+						<td th:text="${p.quantite}"></td>
+						<td th:text="${p.dateAchat}"></td>
+						<td th:text="${p.categorie.libelle}"></td>
+						<td>
+							<input type="radio" th:value="${p.actif}" th:checked="${p.actif}" disabled />
+						</td>
+						<td> <a th:href="@{edit(id=${p.id})}">Editer</a></td>
+						<td> <a onclick="return confirm('Confirmez vous la suppression de ce produit?')"
+								th:href="@{delete(id=${p.id},page=${pageCourante},motCle=${motCle})}">Supprimer</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li th:each="p:${pages}" th:class="${p==pageCourante}?active:''">
+				<a th:text ="${p}" th:href ="@{index(page =${p} , motCle =${motCle} ,typeProduit=${typeProduit}) }"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+
+</html>
