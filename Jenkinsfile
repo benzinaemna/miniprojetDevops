@@ -6,12 +6,12 @@ environment {
 stages {
 stage ('Clone Stage') {
 steps {
-    git branch:'main',url:'https://github.com/benzinaemna/test.git'
+    git branch:'main',url:'https://github.com/benzinaemna/miniprojetDevops.git'
 }
 }
 stage ('Docker Build') {
     steps {
-        sh 'docker build -t emnabenzina/testangular:${DOCKER_TAG} .'
+        sh 'docker build -t emnabenzina/jpa-spring:${DOCKER_TAG} .'
     }
 }
     stage ('DockerHub Push') {
@@ -19,14 +19,14 @@ stage ('Docker Build') {
         withCredentials([string(credentialsId: 'emnabenzina', variable: 'dockerHubPwd')]) {
             sh "docker login -u emnabenzina -p ${dockerHubPwd}"
 }
-         sh "docker push emnabenzina/testangular:${DOCKER_TAG}"
+         sh "docker push emnabenzina/jpa-spring:${DOCKER_TAG}"
 
 }
 }
   stage ('Pre_Deploy') {
       steps {
          sshagent(credentials: ['Vagrant_ssh']) {
-    sh "ssh -T vagrant@10.10.0.145 'docker --version'"
+    sh "ssh -T vagrant@192.168.1.16 'docker --version'"
          }
       }
   }
@@ -35,7 +35,7 @@ stage ('Docker Build') {
         sshagent(credentials: ['Vagrant_ssh']) {
        
 //sh "scp target/hello-world-app-1.0-SNAPSHOT.jar vagrant@192.168.1.201:/home/vagrant"
-        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 80:80 emnabenzina/testangular'"
+        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 emnabenzina/jpa-spring'"
 }
 }
 }
