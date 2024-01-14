@@ -11,7 +11,7 @@ steps {
 }
   stage ('Docker Build') {
     steps {
-        sh 'docker build -t emnabenzina/jpa-spring:${DOCKER_TAG} .'
+        sh 'docker build -t emnabenzina/spring:${DOCKER_TAG} .'
     }
 }
     stage ('DockerHub Push') {
@@ -19,7 +19,7 @@ steps {
         withCredentials([string(credentialsId: 'emnabenzina', variable: 'dockerHubPwd')]) {
             sh "docker login -u emnabenzina -p ${dockerHubPwd}"
 }
-         sh "docker push emnabenzina/jpa-spring:${DOCKER_TAG}"
+         sh "docker push emnabenzina/spring:${DOCKER_TAG}"
 
 }
 }
@@ -35,7 +35,7 @@ steps {
         sshagent(credentials: ['Vagrant_ssh']) {
        
 //sh "scp target/hello-world-app-1.0-SNAPSHOT.jar vagrant@192.168.1.201:/home/vagrant"
-        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 emnabenzina/jpa-spring'"
+        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 emnabenzina/spring'"
 }
 }
 }
