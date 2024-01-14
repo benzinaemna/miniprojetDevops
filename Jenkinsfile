@@ -35,7 +35,7 @@ steps {
         sshagent(credentials: ['Vagrant_ssh']) {
        
 //sh "scp target/hello-world-app-1.0-SNAPSHOT.jar vagrant@192.168.1.201:/home/vagrant"
-        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 gcr.io/emnabenzina/spring'"
+        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 emnabenzina/spring'"
 }
 }
 }
