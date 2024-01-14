@@ -26,7 +26,7 @@ steps {
   stage ('Pre_Deploy') {
       steps {
          sshagent(credentials: ['Vagrant_ssh']) {
-    sh "ssh -T vagrant@192.168.1.18 'docker --version'"
+    sh "ssh -T vagrant@10.10.0.145 'docker --version'"
          }
       }
   }
@@ -35,7 +35,7 @@ steps {
         sshagent(credentials: ['Vagrant_ssh']) {
        
 //sh "scp target/hello-world-app-1.0-SNAPSHOT.jar vagrant@192.168.1.201:/home/vagrant"
-        sh "ssh -T vagrant@192.168.1.18 'docker run -d -p 8888:8888 emnabenzina/jpa-spring'"
+        sh "ssh -T vagrant@10.10.0.145 'docker run -d -p 8888:8888 emnabenzina/jpa-spring'"
 }
 }
 }
