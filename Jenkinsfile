@@ -6,7 +6,7 @@ environment {
 stages {
 stage ('Clone Stage') {
 steps {
-   bat" git clone 'https://github.com/benzinaemna/miniprojetDevops.git'"
+   bat" git 'https://github.com/benzinaemna/miniprojetDevops.git'"
 }
 }
   stage ('Docker Build') {
