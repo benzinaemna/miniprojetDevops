@@ -25,7 +25,9 @@ steps {
 }
   stage ('Pre_Deploy') {
       steps {
+        
          sshagent(credentials: ['Vagrant_ssh']) {
+           cat 'hello'
     sh "ssh -T vagrant@192.168.1.18 'docker --version'"
          }
       }
