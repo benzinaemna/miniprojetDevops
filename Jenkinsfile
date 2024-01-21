@@ -28,6 +28,7 @@ steps {
         
          sshagent(credentials: ['Vagrant_ssh']) {
           sh 'echo hello'
+          sh 'ssh-keygen -H -F vagrant@192.168.1.18'
     sh "ssh -T vagrant@192.168.1.18 'docker --version'"
          }
       }
